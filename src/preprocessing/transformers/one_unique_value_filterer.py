@@ -1,10 +1,9 @@
 from pandas import DataFrame
 
-
 class OneUniqueValueFilterer:
     """
-    Class to filter all columns have more than 1 unique
-    value.
+    Class to filter out all columns that only have 1 unique value
+    Removes columns that are not helpful for model training
     """
 
     COL_AX = 'columns'
@@ -14,16 +13,14 @@ class OneUniqueValueFilterer:
 
     def fit(self, df, y=None):
         """
-        Adding columns that has more than 1 unique value
-        to self.feature_list.
-
-        Args:
-            df (DataFrame): data table to filter columns.
-
-        Returns:
-            OneUniqueValue.
-
+        Add columns that only have 1 unique value to a list
+            Args:
+                df (DataFrame): data table to filter columns
+                y: Features (not used)
+            Returns:
+                features_to_drop_list: list of columns to drop
         """
+
         df = df.loc[:, ~df.columns.duplicated()]
         for col in df.columns:
             temp_col = df[col]
@@ -38,15 +35,14 @@ class OneUniqueValueFilterer:
 
     def transform(self, df):
         """
-        Reassigning dataframe to the new with corresponding
-         columns from self.feature_list.
+            Reassigning dataframe to the new with corresponding
+            columns from self.feature_list
 
-        Args:
-            df (DataFrame): data table to choose columns from.
-
-        Returns:
-            DataFrame. Contains only columns with more than
-                one unique value.
+            Args:
+                df (DataFrame): data table to choose columns from
+            Returns:
+                df_ (Datagframe): Contains only columns with more
+                than one unique value
 
         """
         df_ = df.copy()

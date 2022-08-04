@@ -1,6 +1,11 @@
 import pandas as pd
 import numpy as np
 
+"""
+Create datasets to test the one unique value filter
+Use variables of various types (int, string, float)
+Use datasets with missing values
+"""
 
 int_column_with_one_uniq = pd.DataFrame(
     data={"id": [1, 1, 1, 1, 1],
